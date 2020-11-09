@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Lol';
+    src: url('../src/assets/fonts/lol.ttf') format('embedded-opentype'), url('../src/assets/fonts/lol.woff') format('woff'), url('../src/assets/fonts/lol.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'Lol' !important;
+}
+html, body { height: 100%; }
+body { margin: 0; }
