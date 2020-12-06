@@ -11,3 +11,9 @@
 .example-headers-align .mat-form-field + .mat-form-field {
   margin-left: 8px;
 }
+
+.card-border {
+  border: 1rem solid transparent;
+  border-image: url('../../../assets/images/border.png') 100;
+  box-shadow: unset;
+}

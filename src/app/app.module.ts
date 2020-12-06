@@ -28,6 +28,12 @@ import { ChampionComponent } from './pages/champion/champion.component';
 import { AttributeKindService } from './services/attribute-kind.service';
 import { ChampionsService } from './services/champions.service';
 import { ItemsComponent } from './pages/items/items.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { CreateAttributeKindDialogComponent } from './dialogs/create-attribute-kind-dialog/create-attribute-kind-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +41,7 @@ import { ItemsComponent } from './pages/items/items.component';
     AttributeNamePipe,
     TraitsComponent,
     ItemsComponent,
+    CreateAttributeKindDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +64,11 @@ import { ItemsComponent } from './pages/items/items.component';
     MaterialFileInputModule,
     MatGridListModule,
     MatExpansionModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatDividerModule,
+    MatCardModule,
+    MatCheckboxModule
   ],
   providers: [TraitsService, AttributeKindService, ChampionsService],
   bootstrap: [AppComponent],

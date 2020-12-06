@@ -1,8 +1,8 @@
-<mat-horizontal-stepper linear #stepper>
+<mat-horizontal-stepper #stepper>
   <mat-step [stepControl]="championFormGroup">
     <form [formGroup]="championFormGroup" style="display: grid">
       <ng-template matStepLabel>Champion Data</ng-template>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label i18n>Name</mat-label>
         <input
           matInput
@@ -11,7 +11,7 @@
           required
         />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Icon</mat-label>
         <input
           matInput
@@ -20,7 +20,7 @@
           required
         />
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Cost</mat-label>
         <mat-select formControlName="cost">
           <mat-option *ngFor="let cost of costs" [value]="cost">{{
@@ -28,7 +28,7 @@
           }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Splashart</mat-label>
         <input
           matInput
@@ -37,7 +37,7 @@
           required
         />
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Taits</mat-label>
         <mat-select formControlName="traits" multiple>
           <mat-option *ngFor="let trait of traits" [value]="trait.id">{{
@@ -46,74 +46,200 @@
         </mat-select>
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-raised-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="champioAttributesFormGroup">
-    <form [formGroup]="champioAttributesFormGroup">
+  <mat-step [stepControl]="championAttributesFormGroup">
+    <form [formGroup]="championAttributesFormGroup">
       <ng-template matStepLabel>Champion Attributes</ng-template>
       <mat-accordion formArrayName="attributes" class="example-headers-align">
         <mat-expansion-panel
           [formGroupName]="i"
-          *ngFor="
-            let item of getChampionAttributesForm.controls;
-            let i = index
-          "
+          *ngFor="let item of getChampionAttributesForm.controls; let i = index"
           [expanded]="step === i"
           (opened)="setStep(i)"
           hideToggle
         >
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{ returnAttributeName(item.value.attribute) | attributeName}}
+              {{ returnAttributeName(item.value.attribute) | attributeName }}
             </mat-panel-title>
-            <mat-panel-description>              
-              Description of the attribute
-              <mat-icon>account_circle</mat-icon>
-            </mat-panel-description>
           </mat-expansion-panel-header>
-
-          <mat-form-field style="width:33%">
+          <section>
+            <mat-checkbox [checked]="controlBindingAttr[i]" (change)="updateBinding(i)"
+              >Checked</mat-checkbox
+            >
+          </section>
+          <mat-form-field appearance="outline" style="width: 33%">
             <mat-label>Tier 1</mat-label>
             <input matInput formControlName="tier1" type="number" required />
           </mat-form-field>
-          <mat-form-field style="width:33%">
+          <mat-form-field appearance="outline" style="width: 33%">
             <mat-label>Tier 2</mat-label>
-            <input matInput formControlName="tier2" required />
+            <input
+              matInput
+              formControlName="tier2"
+              required
+            />
           </mat-form-field>
-          <mat-form-field style="width:33%">
+          <mat-form-field appearance="outline" style="width: 33%">
             <mat-label>Tier 3</mat-label>
-            <input matInput formControlName="tier3" required />
+            <input
+              matInput
+              formControlName="tier3"
+              required
+            />
           </mat-form-field>
           <mat-action-row>
-            <button mat-button color="warn" *ngIf="step > 0" (click)="prevStep()">
+            <button
+              mat-raised-button
+              color="warn"
+              *ngIf="step > 0"
+              (click)="prevStep()"
+            >
               Previous
             </button>
-            <button mat-button color="primary" (click)="nextStep()">
-              {{step === getChampionAttributesForm.controls.length - 1 ? 'End' : 'Next'}}
+            <button mat-raised-button color="primary" (click)="nextStep()">
+              {{
+                step === getChampionAttributesForm.controls.length - 1
+                  ? "End"
+                  : "Next"
+              }}
             </button>
           </mat-action-row>
         </mat-expansion-panel>
       </mat-accordion>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="ultimateFormGroup">
-    <ng-template matStepLabel>Champion Ultimate</ng-template>
     <form [formGroup]="ultimateFormGroup">
-      </form>
+      <ng-template matStepLabel>Champion Ultimate</ng-template>
+
+      <mat-card
+        ><mat-card-content style="display: grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              formControlName="name"
+              placeholder="Last name, First name"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              formControlName="description"
+              placeholder="Last name, First name"
+              required
+            ></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Icon</mat-label>
+            <input
+              matInput
+              formControlName="icon"
+              placeholder="Last name, First name"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Kind</mat-label>
+            <mat-select formControlName="kind">
+              <mat-option *ngFor="let kind of ultimateKinds" [value]="kind">{{
+                kind
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </form>
+
+    <form [formGroup]="ultimateAttributesFormGroup">
+      <mat-card style="margin-top: 1rem">
+        <mat-card-header>
+          <mat-card-title>Attributes</mat-card-title>
+          <button mat-button color="primary" (click)="addUltimateAttribute()">
+            New Attribute
+          </button>
+          <button
+            mat-button
+            color="accent"
+            (click)="createAttributeKindUltimate()"
+          >
+            New Attribute Kind
+          </button>
+        </mat-card-header>
+        <mat-card-content>
+          <div
+            style="display: flex; padding: 0 24px 16px"
+            [formGroup]="attribute"
+            *ngFor="
+              let attribute of ultimateAttributesArray.controls;
+              let j = index
+            "
+          >
+            <mat-form-field appearance="outline" style="width: 25%">
+              <mat-label>Value Tier 1</mat-label>
+              <input
+                matInput
+                formControlName="tier1"
+                placeholder="Last name, First name"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 25%">
+              <mat-label>Value Tier 2</mat-label>
+              <input
+                matInput
+                formControlName="tier2"
+                placeholder="Last name, First name"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 25%">
+              <mat-label>Value Tier 3</mat-label>
+              <input
+                matInput
+                formControlName="tier3"
+                placeholder="Last name, First name"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 25%">
+              <mat-label>Attribute Kind</mat-label>
+              <mat-select formControlName="attributeKind">
+                <mat-option
+                  *ngFor="let attribute of ultimateAttributes"
+                  [value]="attribute.id"
+                  >{{ attribute.name | attributeName }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <div>
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext>Next</button>
+      </div>
+    </form>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <p>{{championFormGroup.value | json}}</p>
-    <p>{{champioAttributesFormGroup.value | json}}</p>
+    <p>{{ championFormGroup.value | json }}</p>
+    <p>{{ championAttributesFormGroup.getRawValue() | json }}</p>
+    <p>{{ ultimateFormGroup.value | json }}</p>
+    <p>{{ ultimateAttributesFormGroup.value | json }}</p>
     <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-raised-button matStepperPrevious>Back</button>
+      <button mat-raised-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

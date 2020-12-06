@@ -1,1 +1,133 @@
-<p>traits works!</p>
+<mat-horizontal-stepper #stepper>
+  <mat-step [stepControl]="traitFormGroup">
+    <form [formGroup]="traitFormGroup" style="display: grid">
+      <ng-template matStepLabel>Trait Data</ng-template>
+      <mat-form-field appearance="outline">
+        <mat-label i18n>Name</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Last name, First name"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          placeholder="Last name, First name"
+          required
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Icon</mat-label>
+        <input
+          matInput
+          formControlName="icon"
+          placeholder="Last name, First name"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Kind</mat-label>
+        <mat-select formControlName="kind">
+          <mat-option
+            *ngFor="let kind of traitKinds"
+            [value]="kind"
+            >{{ kind | attributeName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <div>
+      <button mat-raised-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Trait Attributes Data</ng-template>
+
+    <form [formGroup]="traitSetsFormGroup">
+      <mat-card style="margin-top: 1rem">
+        <mat-card-header>
+          <mat-card-title>Sets</mat-card-title>
+          <button mat-button color="primary" (click)="addSet()">New Set</button>
+        </mat-card-header>
+        <mat-card-content>
+          <div
+            style=" padding: 0 24px 16px; display: grid;"
+            [formGroup]="set"
+            *ngFor="let set of getSets.controls; let i = index"
+          >
+          <mat-form-field appearance="outline">
+            <mat-label>Min</mat-label>
+            <input
+              matInput
+              formControlName="min"
+              placeholder="Last name, First name"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Max</mat-label>
+            <input
+              matInput
+              formControlName="max"
+              placeholder="Last name, First name"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Tier</mat-label>
+            <mat-select formControlName="tier">
+              <mat-option
+                *ngFor="let tier of tiersSet"
+                [value]="tier"
+                >{{ tier | attributeName }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+            <button mat-button color="accent" (click)="addAttribute(i)">
+              New Attribute
+            </button>
+            <div
+              style="display: flex; padding: 0 24px 16px;"
+              [formGroup]="attribute"
+              *ngFor="let attribute of getSetAttributes(i).controls; let j = index"
+            >
+              <mat-form-field appearance="outline" style=" width: 50%">
+                <mat-label>Value</mat-label>
+                <input
+                  matInput
+                  formControlName="value"
+                  placeholder="Last name, First name"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" style=" width: 50%">
+                <mat-label>Value</mat-label>
+                <input
+                  matInput
+                  formControlName="attribute"
+                  placeholder="Last name, First name"
+                  required
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <div>
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Resume</ng-template>
+    <div>
+      <button mat-raised-button matStepperPrevious>Back</button>
+      <button mat-raised-button matStepperNext>End</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
