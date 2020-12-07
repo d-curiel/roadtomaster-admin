@@ -16,6 +16,10 @@ export class AttributeKindService {
     return this.httpClient.get(ROOT_URL + '/ultimate');
   }
 
+  findByTrait() {
+    return this.httpClient.get(ROOT_URL + '/trait');
+  }
+
   create(attributeKind){
     return this.httpClient.post(ROOT_URL, attributeKind);
   }

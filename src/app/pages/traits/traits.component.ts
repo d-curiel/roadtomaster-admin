@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CreateAttributeKindDialogComponent } from 'src/app/dialogs/create-attribute-kind-dialog/create-attribute-kind-dialog.component';
+import { AttributeKindService } from 'src/app/services/attribute-kind.service';
 
 @Component({
   selector: 'app-traits',
@@ -10,10 +14,14 @@ export class TraitsComponent implements OnInit {
   step = 0;
   traitFormGroup: FormGroup;
   traitSetsFormGroup : FormGroup;
+  traitAttributes;
   traitKinds = ['class','origin'];
   tiersSet = ['bronze','silver','gold','chromatic'];
   constructor(
-    private _formBuilder: FormBuilder,) {}
+    private _formBuilder: FormBuilder,
+    private _attributeKindService: AttributeKindService,
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog) {}
 
   ngOnInit(): void {
     
@@ -25,7 +33,14 @@ export class TraitsComponent implements OnInit {
     });
     this.traitSetsFormGroup = this._formBuilder.group({
       sets: this._formBuilder.array([]),
-    });
+    }); 
+    this._attributeKindService.findByTrait().subscribe(
+      (data) => {
+        this.traitAttributes = data;
+        console.log(data);
+      },
+      (error) => {}
+    );
   }
 
   get getSets() {
@@ -60,6 +75,37 @@ export class TraitsComponent implements OnInit {
     });
   }
 
+  createAttributeKindTrait() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data ={
+      kind: 'trait'
+    }
+
+    const dialogRef = this.dialog.open(
+      CreateAttributeKindDialogComponent,
+      dialogConfig,
+      
+    );
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._attributeKindService.create(result).subscribe(
+          (data) => {
+            this.openSnackBar();
+          },
+          (error) => {}
+        );
+      }
+    });
+  }
+  openSnackBar() {
+    this._snackBar.open('Tipo de Atributo Creado: ', '', {
+      duration: 3000,
+    });
+  }
   setStep(index: number) {
     this.step = index;
   }

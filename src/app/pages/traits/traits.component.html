@@ -32,11 +32,9 @@
       <mat-form-field appearance="outline">
         <mat-label>Kind</mat-label>
         <mat-select formControlName="kind">
-          <mat-option
-            *ngFor="let kind of traitKinds"
-            [value]="kind"
-            >{{ kind | attributeName }}</mat-option
-          >
+          <mat-option *ngFor="let kind of traitKinds" [value]="kind">{{
+            kind | attributeName
+          }}</mat-option>
         </mat-select>
       </mat-form-field>
     </form>
@@ -55,47 +53,55 @@
         </mat-card-header>
         <mat-card-content>
           <div
-            style=" padding: 0 24px 16px; display: grid;"
+            style="padding: 0 24px 16px; display: grid"
             [formGroup]="set"
             *ngFor="let set of getSets.controls; let i = index"
           >
-          <mat-form-field appearance="outline">
-            <mat-label>Min</mat-label>
-            <input
-              matInput
-              formControlName="min"
-              placeholder="Last name, First name"
-              required
-            />
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Max</mat-label>
-            <input
-              matInput
-              formControlName="max"
-              placeholder="Last name, First name"
-              required
-            />
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Tier</mat-label>
-            <mat-select formControlName="tier">
-              <mat-option
-                *ngFor="let tier of tiersSet"
-                [value]="tier"
-                >{{ tier | attributeName }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Min</mat-label>
+              <input
+                matInput
+                formControlName="min"
+                placeholder="Last name, First name"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Max</mat-label>
+              <input
+                matInput
+                formControlName="max"
+                placeholder="Last name, First name"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Tier</mat-label>
+              <mat-select formControlName="tier">
+                <mat-option *ngFor="let tier of tiersSet" [value]="tier">{{
+                  tier | attributeName
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
             <button mat-button color="accent" (click)="addAttribute(i)">
               New Attribute
             </button>
-            <div
-              style="display: flex; padding: 0 24px 16px;"
-              [formGroup]="attribute"
-              *ngFor="let attribute of getSetAttributes(i).controls; let j = index"
+            <button
+              mat-button
+              color="secondary"
+              (click)="createAttributeKindTrait()"
             >
-              <mat-form-field appearance="outline" style=" width: 50%">
+              New Attribute Kind
+            </button>
+            <div
+              style="display: flex; padding: 0 24px 16px"
+              [formGroup]="attribute"
+              *ngFor="
+                let attribute of getSetAttributes(i).controls;
+                let j = index
+              "
+            >
+              <mat-form-field appearance="outline" style="width: 50%">
                 <mat-label>Value</mat-label>
                 <input
                   matInput
@@ -104,14 +110,15 @@
                   required
                 />
               </mat-form-field>
-              <mat-form-field appearance="outline" style=" width: 50%">
-                <mat-label>Value</mat-label>
-                <input
-                  matInput
-                  formControlName="attribute"
-                  placeholder="Last name, First name"
-                  required
-                />
+              <mat-form-field appearance="outline" style="width: 50%">
+                <mat-label>Attribute Kind</mat-label>
+                <mat-select formControlName="attribute">
+                  <mat-option
+                    *ngFor="let attr of traitAttributes"
+                    [value]="attr.id"
+                    >{{ attr.name | attributeName }}</mat-option
+                  >
+                </mat-select>
               </mat-form-field>
             </div>
           </div>
@@ -125,6 +132,8 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Resume</ng-template>
+    <p>{{ traitFormGroup.value | json }}</p>
+    <p>{{ traitSetsFormGroup.value | json }}</p>
     <div>
       <button mat-raised-button matStepperPrevious>Back</button>
       <button mat-raised-button matStepperNext>End</button>

@@ -126,6 +126,9 @@ export class ChampionComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      kind : 'ultimate'
+    }
 
     const dialogRef = this.dialog.open(
       CreateAttributeKindDialogComponent,

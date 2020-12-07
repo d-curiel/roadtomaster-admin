@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Create Attribute Kind</h2>
 <mat-dialog-content class="mat-typography" [formGroup]="attributeKindFormGroup">
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-label i18n>Name</mat-label>
     <input
       matInput
@@ -9,14 +9,13 @@
       required
     />
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-label>Unit</mat-label>
-    <input
-      matInput
-      formControlName="unit"
-      placeholder="Last name, First name"
-      required
-    />
+    <mat-select formControlName="unit">
+      <mat-option *ngFor="let unit of kinds" [value]="unit">{{
+        unit | attributeName
+      }}</mat-option>
+    </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
